@@ -1,0 +1,11 @@
+{
+    "compilerOptions": {
+      "module": "ES6",
+      "target": "ES6",
+      "baseUrl": ".",
+      "paths": {
+        "k6": ["./node_modules/k6"]
+      }
+    }
+  }
+  
