@@ -29,11 +29,11 @@ export function getAccessToken() {
   let password 
 
   if(__ENV.DIFFERENCE_IDENTITY){
-    email = `cms-${(execution.vu.idInInstance%((Number(__ENV.ACTUAL_IDENTITY) - 1) || 19)) + 1}@load-testing.com`
+    email = `cms-${(execution.vu.idInInstance%((Number(__ENV.ACTUAL_IDENTITY)) || 5)) + 1}@load-testing.com`
     password = __ENV.IDENTITY_PASSWORD  || 'LoadTesting123'
   }else{
-    email = 'james@test.com'
-    password = 'Ilham12345'
+    email = 'cms-1@load-testing.com'
+    password = 'Vico12345'
   }
   
   const loginRequest = {

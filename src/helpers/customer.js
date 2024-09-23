@@ -27,11 +27,11 @@ export function getAccessToken() {
   let password 
 
   if(__ENV.DIFFERENCE_CUSTOMER){
-    email = `customer-${(execution.vu.idInInstance%((Number(__ENV.ACTUAL_CUSTOMER) - 1) || 19)) + 1}@load-testing.com`
+    email = `customer-${(execution.vu.idInInstance%((Number(__ENV.ACTUAL_CUSTOMER)) || 20)) + 1}@load-testing.com`
     password = __ENV.CUSTOMER_PASSWORD  || 'LoadTesting123'
   }else{
-    email = 'wanda@test.com'
-    password = 'Wanda123'
+    email = 'customer-1@load-testing.com'
+    password = 'LoadTesting123'
   }
   
   const loginRequest = {

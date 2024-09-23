@@ -1,11 +1,11 @@
 import http from 'k6/http';
-import { sleep } from 'k6';
+import { check, sleep } from 'k6';
 import { getAccessToken } from '../helpers/customer.js';
 
 export const options = {
   stages: [
-    { duration: '1s', target: 1 },  // Ramp-up to 20 VUs
-    { duration: '1s', target: 1 },  // Stay at 20 VUs for 2 iterations
+    { duration: '2s', target: 20 },  // Ramp-up to 20 VUs
+    { duration: '2s', target: 20 },  // Stay at 20 VUs for 2 iterations
   ],
   thresholds: {
     // 1. Rate of failed HTTP requests should be less than 0.1%
@@ -42,6 +42,10 @@ export default function () {
 
   // Send POST request with body
   const res = http.post(url, payload, params);
+
+  const checkRes = check(res, {
+    'response status must 200 or 400': (response) => response.status === 201 || response.status === 400,
+  });
 
   console.log('response: ', res.json())
   // Simulate a 1-second delay between requests
