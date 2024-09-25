@@ -1,11 +1,13 @@
 import http from 'k6/http';
 import { check, sleep } from 'k6';
 import { getAccessToken } from '../helpers/customer.js';
+import { paramsRaw } from '../helpers/params_raw.js';
 
 export const options = {
   stages: [
-    { duration: '2s', target: 20 },  // Ramp-up to 20 VUs
-    { duration: '2s', target: 20 },  // Stay at 20 VUs for 2 iterations
+    { duration: '1s', target: 100 },  // Ramp-up to 20 VUs
+    { duration: '3s', target: 300 },  // Stay at 20 VUs for 2 iterations
+    { duration: '6s', target: 1000 },  // Stay at 20 VUs for 2 iterations
   ],
   thresholds: {
     // 1. Rate of failed HTTP requests should be less than 0.1%
@@ -22,7 +24,6 @@ export const options = {
 export default function () {
   // Retrieve access token
   const accessToken = getAccessToken();
-
   // Request headers with Authorization Bearer token
   const params = {
     headers: {
@@ -41,13 +42,20 @@ export default function () {
   });
 
   // Send POST request with body
-  const res = http.post(url, payload, params);
-
+  const res = http.post(url, payload, {
+    ...paramsRaw,
+    ...params
+  });
+  
   const checkRes = check(res, {
     'response status must 200 or 400': (response) => response.status === 201 || response.status === 400,
+    'response message must create or transaction': (response) => response.json().message === 'Created' || response.json().message === 'There is no transaction now.' || response.json().message === 'Not enough points available to redeem.' || response.json().message === 'Not enough stock available to redeem Load Test Publish'
   });
 
-  console.log('response: ', res.json())
+  if (!checkRes) {
+    fail(`Checkout Failed`);
+  };
+
   // Simulate a 1-second delay between requests
-  sleep(1);
+  sleep(2);
 }

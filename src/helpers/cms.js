@@ -30,7 +30,7 @@ export function getAccessToken() {
 
   if(__ENV.DIFFERENCE_IDENTITY){
     email = `cms-${(execution.vu.idInInstance%((Number(__ENV.ACTUAL_IDENTITY)) || 5)) + 1}@load-testing.com`
-    password = __ENV.IDENTITY_PASSWORD  || 'LoadTesting123'
+    password = __ENV.IDENTITY_PASSWORD  || 'Vico12345'
   }else{
     email = 'cms-1@load-testing.com'
     password = 'Vico12345'
@@ -72,7 +72,7 @@ export function requestLinkUpload(file){
 
   // Send GET request
   const linkResponse = http.get(url, params);
-  // console.log('linkResponse: ', linkResponse)
+
   const checkLink = check(linkResponse, {
     'request link status must 200': (response) => response.status === 200
   });

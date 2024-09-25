@@ -33,10 +33,8 @@ export default function () {
   // const fileContent = fileContents[randomIndex];  // Get the preloaded content of the file
 
   //static file open
-  console.log('cekcekcek: ', execution.vu.idInInstance)
   const randomFile = files[`${(execution.vu.idInInstance%((Number(__ENV.ACTUAL_IDENTITY)) || 5))}`]
   const fileContent = fileContents[`${(execution.vu.idInInstance%((Number(__ENV.ACTUAL_IDENTITY)) || 5))}`]
-  // console.log('randomFile: ', randomFile);
 
   // Request presigned URL for file upload
   const { linkResponse, accessToken } = requestLinkUpload(randomFile);
@@ -66,7 +64,6 @@ export default function () {
   const generatedName = urlWithoutParams.substring(urlWithoutParams.lastIndexOf('/') + 1);  // Extract the last part of the URL
 
   // Define the request body for the POST request
-  console.log('randomFilerandomFile: ', randomFile)
   const requestBody = {
     original_name: randomFile,
     generated_name: `file/${generatedName}`,
@@ -82,7 +79,6 @@ export default function () {
       'Content-Type': 'application/json',
     },
   });
-  console.log('postResponse2: ', postResponse.json())
   // Check if the POST request was successful
   const checkPost = check(postResponse, {
     'POST response status must be 201': (res) => res.status === 201,
@@ -93,5 +89,5 @@ export default function () {
   }
 
   // Simulate a 1-second delay between requests
-  sleep(1);
+  sleep(2);
 }
