@@ -1,3 +1,3 @@
 export const paramsRaw = {
-    timeout: '240s'
+    timeout: '300s'
 }

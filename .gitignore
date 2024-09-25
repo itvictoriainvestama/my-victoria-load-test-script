@@ -25,6 +25,6 @@ logs
 # Environment variables
 .env*
 
-*.sh*
+# *.sh*
 
 result
