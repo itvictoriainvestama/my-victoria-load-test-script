@@ -11,7 +11,7 @@ export IDENTITY_URL=https://vgh-api.otesuto.com/identity
 # export IDENTITY_URL=https://api.myvictoria.co.id/identity
 export DIFFERENCE_IDENTITY=true
 export K6_WEB_DASHBOARD=true
-export TOTAL_DATA_NASABAH=10000
+export TOTAL_DATA_NASABAH=200
 
 # Use the first parameter as the dynamic part
 if [ -z "$1" ]; then
